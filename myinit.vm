@@ -1,0 +1,68 @@
+set shell=/bin/zsh
+set shiftwidth=4
+set tabstop=4
+set expandtab
+set textwidth=0
+set autoindent
+set hlsearch
+set clipboard=unnamed
+set number
+
+call plug#begin()
+" Horizon is a beautifully warm dark colorscheme for Vim
+Plug 'ntk148v/vim-horizon'
+" fzf allow you to quickly search and select items from a list using fuzzy matching. 
+Plug 'junegunn/fzf', { 'do': 'fzf#install()' }
+" NERDTree is a file system explorer 
+" Users can visually browse complex directory hierarchies, quickly open files for reading or editing
+Plug 'preservim/nerdtree'
+" POLYGLOT enhances the text editing including for a wide array of programming languages and markup formats. 
+Plug 'sheerun/vim-polyglot'
+" COC enhance the coding experience by providing rich features like VS CODE
+" such as auto-completion, code diagnostics (linting), snippets, code formatting, and more. 
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+" vimでemmet を扱うようにする。
+Plug 'mattn/emmet-vim'
+" undoを視覚的に管理する。
+Plug 'mbbill/undotree'
+" fuzzyfinder
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
+"Prettier コードのフォーマットを整理する
+Plug 'sbdchd/neoformat'
+"PDFをVIM化する。
+Plug 'makerj/vim-pdf'
+"Markdown Preview
+Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install' }
+call plug#end()
+
+" gitgutter をハイライトに変更する。
+let g:gitgutter_use_location_list = 1
+
+" if you don't set this option, this color might not correct
+set termguicolors
+
+colorscheme horizon
+
+" lightline
+let g:lightline = {}
+let g:lightline.colorscheme = 'horizon'
+
+" コメントを簡単にする　ビジュアルモードからGC でコメント化　
+" https://github.com/tpope/vim-commentary 
+filetype plugin indent on
+
+" Neovimでcoc.nvimを使用して自動補完を行う際に、Enterキーを押下し、自動入力する。
+inoremap <silent><expr> <CR> pumvisible() ? coc#pum#confirm() : "\<CR>"
+
+"fuzzyfinderを使用しctl + p でFilesを開く。
+nnoremap <C-p> :Files <Cr>
+" ウィンドウ40%にfzfを表示する。
+let g:fzf_layout = { 'down': '40%' }
+" Prettier を有効にする
+let g:neoformat_try_node_exe = 1
+autocmd FileType javascript setlocal formatprg=prettier\ --single-quote\ --trailing-comma\ es5
+autocmd FileType css setlocal formatprg=prettier\ --parser\ css
+autocmd FileType html setlocal formatprg=prettier\ --parser\ html
+autocmd FileType java setlocal formatprg=prettier\ --parser\ java
+autocmd FileType xml setlocal formatprg=prettier\ --parser\ xml
